@@ -6,4 +6,13 @@
     <h3>Data after calling the API: </h3>{{ city_weather }}
     <p>Also the image icon is</p>
     <img src="http://openweathermap.org/img/w/{{ city_weather.icon }}.png" alt="Something went wrong">
+    <h3>Diplaying multiple cities</h3>
+    {% for city_weather in weather_data %}
+        <ul>
+            <li>{{ city_weather.city }}</li>
+            <li>{{ city_weather.temperature }}</li>
+            <li>{{ city_weather.description }}</li>
+            <li>{{ city_weather.icon }}</li>
+        </ul>
+    {% endfor %}
 </html>
