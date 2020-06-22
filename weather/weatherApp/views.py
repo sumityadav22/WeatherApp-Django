@@ -28,5 +28,8 @@ def addCity(request):
         new_city = form.cleaned_data['name']
         existing_city_count = City.objects.filter(name = new_city).count()
         if existing_city_count == 0:
-            form.save()
+            # City name validation
+            response = requests.get(url.format(new_city)).json()
+            if response['cod'] == 200:
+                form.save()
     return redirect('home')
