@@ -5,3 +5,4 @@ class CityForm(forms.ModelForm):
     class Meta:
         model = City
         fields = ['name']
+        widgets ={'name':forms.TextInput(attrs = {'class':'form-control','placeholder':'Type here...'})}

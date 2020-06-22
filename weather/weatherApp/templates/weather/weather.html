@@ -1,39 +1,63 @@
-<html>
-    <head>
-        <title>Weather App</title>
-    </head>
-    <h1>Welcome to WeatherApp</h1>
-    <div class="addCity">
-        <form action="{% url 'addcity' %}" method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Add City">
-        </form>
-    </div>
-    <h3>Data after calling the API: </h3>{{ city_weather }}
-    <p>Also the image icon is</p>
-    <img src="http://openweathermap.org/img/w/{{ city_weather.icon }}.png" alt="Something went wrong">
-    <h3>Diplaying multiple cities</h3>
-    {% for msg in messages %}
-    </div>
-    <li style="display: inline;">
-        <div class = 'alert alert-{{ msg.level_tag }} mt-2' roll = 'alert'>
-            {{ msg.message }}
+<!DOCTYPE html>
+<head>
+    <title>Weather App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+  <body>
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand" href="{% url 'home' %}">Weather App</a>
+        <a class="navbar-brand" href="#">About</a>
+    </nav>
+    <div class = 'container mt-2'>
+        <div class="float-right">
+            <form action="{% url 'delete_city' %}" method="post">
+                {% csrf_token %}
+                <button class="btn btn-danger" type="submit">Delete All</button>
+            </form>
         </div>
-    </li>
-    {% endfor %}
-    {% for city_weather in weather_data %}
-        <ul>
-            <li>{{ city_weather.city }}</li>
-            <li>{{ city_weather.temperature }}</li>
-            <li>{{ city_weather.description }}</li>
-            <li>{{ city_weather.icon }}</li>
-        </ul>
-    {% endfor %}
-    <div class= "Delete_Button">
-        <form action="{% url 'delete_city' %}" method="post">
-        {% csrf_token %}
-            <button type="submit">Delete All</button>
-        </form>
+        <div>
+            <form class="form-inline" action="{% url 'addcity' %}" method="post">
+                {% csrf_token %}
+                <div class = 'row'>
+                    <div class="col">
+                        {{ form.name }}
+                        <input class="btn btn-primary ml-1" type="submit" value="Add City">
+                    </div>
+                </div>
+            </form>
+            {% for msg in messages %}
+        </div>
+        <li style="display: inline;">
+            <div class = 'alert alert-{{ msg.level_tag }} mt-2' roll = 'alert'>
+                {{ msg.message }}
+            </div>
+        </li>
+        {% endfor %}
     </div>
+    
+    <div class="container pt-3">
+        {% for city_weather in weather_data %}
+        <div class="container border border-light">
+            <div class="main">
+                <div class="float-left">
+                    <img src="http://openweathermap.org/img/w/{{ city_weather.icon }}.png" alt="Something went wrong">
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">{{ city_weather.city }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">{{ city_weather.temperature }} °C</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">{{ city_weather.description }}</div>
+                </div>
+            </div>
+        </div>
+        <br>
+        {% endfor %}
+    </div>
+  </body>
 </html>
