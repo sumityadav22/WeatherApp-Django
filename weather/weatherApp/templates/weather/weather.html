@@ -14,6 +14,14 @@
     <p>Also the image icon is</p>
     <img src="http://openweathermap.org/img/w/{{ city_weather.icon }}.png" alt="Something went wrong">
     <h3>Diplaying multiple cities</h3>
+    {% for msg in messages %}
+    </div>
+    <li style="display: inline;">
+        <div class = 'alert alert-{{ msg.level_tag }} mt-2' roll = 'alert'>
+            {{ msg.message }}
+        </div>
+    </li>
+    {% endfor %}
     {% for city_weather in weather_data %}
         <ul>
             <li>{{ city_weather.city }}</li>

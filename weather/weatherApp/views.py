@@ -1,4 +1,5 @@
 import requests
+from django.contrib import messages
 from django.shortcuts import redirect, render
 from .forms import CityForm
 from .models import City
@@ -32,4 +33,9 @@ def addCity(request):
             response = requests.get(url.format(new_city)).json()
             if response['cod'] == 200:
                 form.save()
+                messages.add_message(request,messages.SUCCESS,"City is added successfully !")
+            else:
+                messages.add_message(request, messages.WARNING,"Sorry we couldn't find the city you entered !")
+        else:
+            messages.add_message(request, messages.INFO,"City is already present in the database")
     return redirect('home')
