@@ -39,3 +39,8 @@ def addCity(request):
         else:
             messages.add_message(request, messages.INFO,"City is already present in the database")
     return redirect('home')
+
+def deleteCity(request):
+    city = City.objects.all()
+    city.delete()
+    return redirect('home')

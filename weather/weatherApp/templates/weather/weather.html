@@ -30,4 +30,10 @@
             <li>{{ city_weather.icon }}</li>
         </ul>
     {% endfor %}
+    <div class= "Delete_Button">
+        <form action="{% url 'delete_city' %}" method="post">
+        {% csrf_token %}
+            <button type="submit">Delete All</button>
+        </form>
+    </div>
 </html>
