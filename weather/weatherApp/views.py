@@ -24,5 +24,9 @@ def index(request):
 def addCity(request):
     form = CityForm(request.POST)
     if form.is_valid():
-        form.save()
+        # Duplicate city check
+        new_city = form.cleaned_data['name']
+        existing_city_count = City.objects.filter(name = new_city).count()
+        if existing_city_count == 0:
+            form.save()
     return redirect('home')
