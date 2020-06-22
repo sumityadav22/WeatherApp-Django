@@ -47,3 +47,6 @@ def deleteCity(request):
     city = City.objects.all()
     city.delete()
     return redirect('home')
+
+def about(request):
+    return render(request, 'weather/about.html')
