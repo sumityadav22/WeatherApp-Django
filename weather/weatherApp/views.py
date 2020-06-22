@@ -1,3 +1,4 @@
+import math
 import requests
 from django.contrib import messages
 from django.shortcuts import redirect, render
@@ -8,14 +9,15 @@ url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=
 
 def index(request):
     form = CityForm()
-    city = "Mumbai"
-    response = requests.get(url.format(city)).json()
     cities = City.objects.all()
     weather_data = []
     for city in cities:
+        response = requests.get(url.format(city)).json()
+        fahrenheit_temperature = response['main']['temp']
+        celsius_temperature = (fahrenheit_temperature - 32)*5 / 9
         city_weather = {
                 'city': city.name.capitalize(),
-                'temperature': response['main']['temp'],
+                'temperature': math.ceil(celsius_temperature),
                 'description': response['weather'][0]['description'].capitalize(),
                 'icon': response['weather'][0]['icon']
             }
